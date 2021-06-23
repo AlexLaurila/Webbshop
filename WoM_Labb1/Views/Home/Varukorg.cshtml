@@ -1,0 +1,110 @@
+﻿@model WoM_Labb1.Data.ProduktContext
+
+@{
+    ViewData["Title"] = "Varukorg";
+}
+
+@if(ViewData["errorMessage"] != null)
+{
+    <table>
+        <tr>
+            <td>
+                <p style="color:red"><strong>Error!</strong> @ViewData["errorMessage"]</p>
+            </td>
+        </tr>
+    </table>
+}
+
+<h1>Varukorg</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>
+                ProduktID
+            </th>
+            <th>
+                ProduktNamn
+            </th>
+            <th>
+                ProduktPris
+            </th>
+            <th>
+                Antal
+            </th>
+            <th>
+                Lager
+            </th>
+            <th>
+                Summa
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach(var produktItem in ViewData["produktsInCart"] as IList<ShoppingCart>)
+    {
+        <tr>
+            <td width="250" height="50">
+                @produktItem.Id
+            </td>
+            <td width="250" height="50">
+                <a href="https://localhost:5001/Home/Product?item=@produktItem.Id"> @produktItem.Produkt.productName </a>
+            </td>
+            <td width="250" height="50">
+                @produktItem.Produkt.productPrice SEK
+            </td>
+            <td width="250" height="50">
+                <form action="EditItem">
+                    <input id="amount" name="itemAmount" type="number" value="@produktItem.Antal" min="1" max="@produktItem.Produkt.productInStore" />
+                    <input type="hidden" name="itemName" value="@produktItem.Produkt.productName" />
+                    <input type="hidden" name="change" value="Remove"/>
+                    <button> Ändra </button>
+                </form>
+            </td>
+            <td width="250" height="50">
+                @produktItem.Produkt.productInStore
+            </td>
+            <td width="250" height="50">
+                @{int sum = (ViewData["sum"] as IList<int>).First();
+                  (ViewData["sum"] as IList<int>).RemoveAt(0);}
+                @sum SEK
+            </td>
+            <td width="250" height="50">
+                <a asp-area="" asp-controller="ShoppingCarts" asp-action="Delete" asp-route-id="@produktItem.VarukorgId">Ta bort</a>
+            </td>
+        </tr>
+    }
+
+</table>
+<table class="table">
+    Totalsumma (exkl. moms): @ViewData["totalSum"] SEK
+    <br />Totalsumma (inkl. moms): @ViewData["totalSumVAT"] SEK
+    <tr></tr>
+</table>
+
+@{if (Model.ShoppingCart.Count() > 0)
+    {
+    <a class="navbar-brand" asp-area="" asp-controller="Customers" asp-action="Create">
+        <button type="button" style="background:Lightgreen;"> Check Out </button>
+    </a>
+
+    <table>
+        <br />
+        <br />
+        <tr>
+            Andra produkter som folk har köpt:
+        </tr>
+        <tr>
+            @foreach(var item in ViewData["produktList"] as IList<Produkt>)
+            {
+            <td width="100px">
+                <a href="https://localhost:5001/Home/Product?item=@item.Id"> @item.productName </a>
+                <br />
+                @item.productPrice SEK
+            </td>
+            }
+        </tr>
+    </table>
+}}
+

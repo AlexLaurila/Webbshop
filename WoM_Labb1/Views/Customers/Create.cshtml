@@ -1,0 +1,64 @@
+﻿@model WoM_Labb1.Models.Customer
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="personnummer" class="control-label"></label>
+                <input asp-for="personnummer" class="form-control" />
+                <span asp-validation-for="personnummer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fornamn" class="control-label"></label>
+                <input asp-for="fornamn" class="form-control" />
+                <span asp-validation-for="fornamn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="efternamn" class="control-label"></label>
+                <input asp-for="efternamn" class="form-control" />
+                <span asp-validation-for="efternamn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="postadress" class="control-label"></label>
+                <input asp-for="postadress" class="form-control" />
+                <span asp-validation-for="postadress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="postnr" class="control-label"></label>
+                <input asp-for="postnr" class="form-control" />
+                <span asp-validation-for="postnr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ort" class="control-label"></label>
+                <input asp-for="ort" class="form-control" />
+                <span asp-validation-for="ort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="epost" class="control-label"></label>
+                <input asp-for="epost" class="form-control" />
+                <span asp-validation-for="epost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="telefonnummer" class="control-label"></label>
+                <input asp-for="telefonnummer" class="form-control" />
+                <span asp-validation-for="telefonnummer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a class="navbar-brand" asp-area="" asp-controller="Customers" asp-action="Checkout">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

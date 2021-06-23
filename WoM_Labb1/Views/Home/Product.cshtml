@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Product";
+}
+
+<h1>Product</h1>
+@foreach (var item in ViewData["Message"] as IList<Produkt>)
+{
+    <table>
+        <tr>
+            <td>
+                <p>
+                    @{if (item.productImage != null)
+                        {
+                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.productImage)" width="500" , height="500" />
+                        }}
+                    <br /> <strong>Produktnamn:</strong> @item.productName
+                    <br /> <strong>Produktbeskrivning:</strong> @item.productDescription
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong> Pris (exkl. moms): @item.productPrice SEK </strong>
+                <br />Antal i lager: @item.productInStore
+
+                <form action="AddItem">
+                    <br /><input id="amount" name="itemAmount" type="number" value="1" min="1" max="@item.productInStore" />
+                    <input type="hidden" name="itemName" value="@item.productName" />
+                    <button style="background:Lightgreen;"> KÖP </button>
+                </form>
+            </td>
+        </tr>
+    </table>
+}
+

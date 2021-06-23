@@ -1,0 +1,124 @@
+﻿@{
+    ViewData["Title"] = "SearchResult";
+}
+
+<h1>SearchResult</h1>
+@foreach (var item in ViewData["Customer"] as IList<Customer>)
+{
+    <table>
+        <tr>
+            <td>
+                <strong>Firstname: </strong> @item.fornamn
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Lastname: </strong> @item.efternamn
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>PostalAdress: </strong> @item.postadress
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>ZipCode: </strong> @item.postnr
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>City: </strong> @item.ort
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Email:  </strong> @item.epost
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>PhoneNumber: </strong>  @item.telefonnummer
+            </td>
+        </tr>
+    </table>
+}
+
+@foreach (var item in ViewData["Order"] as IList<Order>)
+{
+    <br />
+    <br />
+<table>
+    <thead style="border:2px solid #000000;">
+        <tr>
+            <th>
+                ProduktID
+            </th>
+            <th>
+                ProduktNamn
+            </th>
+            <th>
+                ProduktPris
+            </th>
+            <th>
+                Antal
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    @foreach (var produktItem in ViewData["Produkt"] as IList<Produkt>)
+    {
+        foreach (var orderDetailItem in ViewData["OrderDetail"] as IList<OrderDetails>)
+        {
+            if (produktItem.Id == orderDetailItem.Id)
+            {
+                <tr>
+                    <td width="250" height="50">
+                        @produktItem.Id
+                    </td>
+                    <td width="250" height="50">
+                        @produktItem.productName
+                    </td>
+                    <td width="250" height="50">
+                        @orderDetailItem.Pris SEK
+                    </td>
+                    <td width="250" height="50">
+                        @orderDetailItem.Antal
+                    </td>
+                </tr>
+                break;
+            }
+        }
+    }
+
+</table>
+
+    <br />
+    <table>
+        <tr>
+            <td>
+                <strong>OrderId: </strong> @item.orderId
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Totalsumma (exkl. moms): </strong> @ViewData["Sum"] SEK
+                <br /><strong>Totalsumma (inkl. moms): </strong> @ViewData["SumVAT"] SEK
+            </td>
+        </tr>
+    </table>
+}
+
+@if((ViewData["Order"] as IList<Order>).Count() == 0)
+{
+    <table>
+        <tr>
+            <td>
+                Det angivna ordernumret hittas inte i databasen
+            </td>
+        </tr>
+    </table>
+}
+
